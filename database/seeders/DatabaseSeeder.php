@@ -9,15 +9,18 @@ use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
-     */
+     * @return void 
+    */
+    
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
+        
+        User::factory()->create(attributes: [
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => bcrypt('password123'),
         ]);
+
+        $this->call(ProductSeeder::class);
     }
 }
