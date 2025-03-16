@@ -55,13 +55,9 @@ class RegisteredUserController extends Controller
             'role' => $request->role ?? 'user',
         ]);
 
-        // Dispara evento de registro
         event(new Registered($user));
-
-        // Faz login do usuário após o cadastro
         Auth::login($user);
 
-        // Redireciona para o dashboard
         return redirect(route('dashboard', absolute: false));
     }
 }

@@ -20,15 +20,24 @@ class ProdutoController extends Controller
     })->paginate(9);
     return view('dashboard', compact('categorias', 'produtos'));
 }
-
-/* public function createCompra($id)
+public function destroy($id)
 {
     $produto = Produto::findOrFail($id);
-    $user = Auth::user();
-    $user->saldo += $produto->preco;
-    $user->save();
-    return redirect()->route('produtos.index')->with('success', 'Compra realizada com sucesso!');
-} */
+
+    // Somente o usuário que criou o produto pode deletar ou o admin
+    if ($produto->user_id !== Auth::id() && Auth::user()->role !== 'admin') {
+        return redirect()->route('produtos.index')->with('error', 'Você não tem permissão para excluir este produto.');
+    }
+
+    // Deleta a imagem associada ao produto
+    if ($produto->imagem) {
+        \Storage::disk('public')->delete($produto->imagem);
+    }
+
+    $produto->delete();
+
+    return redirect()->route('produtos.index')->with('status', 'Produto deletado com sucesso!');
+}
 
 
     public function show($id){

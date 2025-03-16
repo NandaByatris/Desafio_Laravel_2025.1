@@ -18,6 +18,13 @@
                 </div>
             </div>
 
+            <!-- Novo botão de saque -->
+            <div class="mt-6 text-black-500">
+                <a href="{{ route('saque.index') }}" class="bg-green-500 text-black px-4 py-2 rounded-lg hover:bg-green-600">
+                    Saque
+                </a>
+            </div>
+
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
