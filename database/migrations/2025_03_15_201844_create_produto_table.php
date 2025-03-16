@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('descricao')->nullable();
             $table->integer('quantidade')->default(0);
             $table->foreignId('categoria_id')->constrained('categoria')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
@@ -32,3 +33,5 @@ return new class extends Migration
         Schema::dropIfExists('produto');
     }
 };
+
+?>

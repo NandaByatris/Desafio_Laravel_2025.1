@@ -31,20 +31,39 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'telefone' => ['nullable', 'string'],
+            'data_nascimento' => ['date'],
+            'cpf' => ['string', 'unique:users'],
+            'saldo' => 'required|numeric',
+            'imagem' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'role' => ['required', 'in:user,admin'],
         ]);
 
+        // Criação do usuário
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'imagem' => $request->file('imagem') ? $request->file('imagem')->store('images', 'public') : null,
+            'endereco' => $request->endereco,
+            'telefone' => $request->telefone,
+            'data_nascimento' => $request->data_nascimento,
+            'cpf' => $request->cpf,
+            'saldo' => $request->saldo,
+            'role' => $request->role ?? 'user',
         ]);
 
+        // Dispara evento de registro
         event(new Registered($user));
 
+        // Faz login do usuário após o cadastro
         Auth::login($user);
 
+        // Redireciona para o dashboard
         return redirect(route('dashboard', absolute: false));
     }
 }
+
+?>

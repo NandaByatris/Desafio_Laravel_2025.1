@@ -22,4 +22,3 @@ class CompraController extends Controller
 
 
 ?>
- 

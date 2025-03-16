@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\CompraController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+
 use App\Models\Categoria;
 use App\Models\Produto;
 
@@ -22,6 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store']);
+
+Route::post('/compra/{produto}', [CompraController::class, 'create'])->name('compra.create');
 
 require __DIR__.'/auth.php';
 
