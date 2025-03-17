@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade as PDF;
 
+//Não está funcionando
 class VendaController extends Controller
 {
     public function index(Request $request)

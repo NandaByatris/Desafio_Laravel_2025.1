@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
+//Não está funcionando, consequentemente, o histórico de compra e vendas também não está
+
 class CompraController extends Controller
 {
     public function createCheckout(Request $request)
