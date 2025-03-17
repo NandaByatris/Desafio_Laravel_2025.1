@@ -7,6 +7,13 @@
         </h2>
     </x-slot>
 
+<!-- Botão Criar Produto -->
+<form action="{{ route('produtos.create') }}" method="get">
+    <button type="submit" class=" ml-4 mt-4 bg-black text-white p-2 rounded">
+        Criar Produto
+    </button>
+</form>
+
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -34,14 +41,30 @@
                                 <p class="text-lg">R$ {{ number_format($produto->preco, 2, ',', '.') }}</p>
                                 <p>{{ Str::limit($produto->descricao, 100) }}</p>
 
-                                <a href="{{ route('produtos.show', $produto) }}" class="text-blue-500 hover:underline">Ver produto</a>
-
+            
+                                <!-- Botão de compra, TESTE -->
                                 @if (!auth()->user()->is_admin)
-                                    <form action="{{ route('compra.create', $produto->id) }}" method="POST">
+                                    <form action="{{ route('checkout') }}" method="POST">
                                         @csrf
+                                        <input type="hidden" name="produto_id" value="{{ $produto->id }}">
                                         <button type="submit" class="bg-blue-500 text-white p-2 rounded">Comprar</button>
                                     </form>
                                 @endif
+
+
+                                <div class="mt-4 flex space-x-4">
+
+                                    <a href="{{ route('produtos.show', $produto->id) }}" class="text-blue-500 hover:underline ">Ver produto</a>
+
+                                    <a href="{{ route('produtos.edit', $produto->id) }}" class="text-black-500 hover:underline">Editar</a>
+                                    
+                                    <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este produto?')" class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:underline">Excluir</button>
+                                    </form>
+                                </div>
+
                             </div>
                         @endforeach
                     </div>

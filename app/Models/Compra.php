@@ -12,8 +12,8 @@ class Compra extends Model
 {
     use HasFactory;
 
-
-    protected $fillable = ['produto_id', 'user_id', 'valor_pago', 'status'];
+    protected $table = 'orders'; 
+    protected $fillable = ['produto_id', 'status', 'valor_pago', 'user_id'];
 
 
     public function produto(){

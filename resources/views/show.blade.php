@@ -17,6 +17,7 @@
             <p class="mt-2">Anunciado por: {{ $produto->user->name }}</p>
             <p class="mt-2">Telefone: {{ $produto->user->telefone }}</p>
 
+
             @if (Auth::check() && !Auth::user()->is_admin)
                 <form action="{{ route('compra.create', $produto->id) }}" method="POST">
                     <button type="submit" class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-md">Comprar</button>
